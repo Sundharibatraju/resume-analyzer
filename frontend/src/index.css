@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* ---- Color tokens ---- */
+  /* Paper / light surface */
+  --color-paper: #FAF7F0;
+  --color-paper-dim: #F0ECE2;
+
+  /* Ink / dark surface (used as the "dark mode" base) */
+  --color-ink: #0F172A;
+  --color-ink-soft: #16213D;
+  --color-ink-line: #263254;
+
+  /* Text */
+  --color-text-primary: #1E1B16;
+  --color-text-secondary: #5C5648;
+  --color-text-onink: #F4F1E8;
+  --color-text-onink-secondary: #9AA5C4;
+
+  /* Signal accent system — these are the heart of the brand */
+  --color-signal-clear: #2DD4BF;     /* teal: skills matched / score high */
+  --color-signal-clear-deep: #0F9C8B;
+  --color-signal-review: #F5A524;    /* amber: partial match / review */
+  --color-signal-review-deep: #C97F0E;
+  --color-signal-gap: #FB6F6F;       /* coral: missing / low score */
+  --color-signal-gap-deep: #DC4949;
+
+  --color-line: #E3DDC9;
+  --color-line-dark: #2A3454;
+
+  /* ---- Fonts ---- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.dark {
+  background: var(--color-ink);
+  color: var(--color-text-onink);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-tabular {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+}
+
+/* Subtle paper-grain texture for light mode backgrounds */
+.paper-grain {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(30, 27, 22, 0.025) 0%, transparent 50%),
+    radial-gradient(circle at 80% 60%, rgba(30, 27, 22, 0.02) 0%, transparent 50%);
+}
+
+/* Glassmorphism card */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.dark .glass {
+  background: rgba(22, 33, 61, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(154, 165, 196, 0.12);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(92, 86, 72, 0.25);
+  border-radius: 8px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(154, 165, 196, 0.2);
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visibility */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--color-signal-clear);
+  outline-offset: 2px;
+}
+
+/* Print styles — used by the "Export report" button (window.print) */
+@media print {
+  body { background: white !important; color: black !important; }
+  .print\:hidden { display: none !important; }
+  .glass {
+    background: white !important;
+    backdrop-filter: none !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  header { display: none !important; }
+}
