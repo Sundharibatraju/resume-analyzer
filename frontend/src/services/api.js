@@ -1,7 +1,15 @@
 import axios from "axios";
 
+// In local dev, Vite proxies "/api" straight to Flask (see vite.config.js),
+// so the relative path works with no configuration.
+// In production, the frontend and backend are on different domains
+// (Vercel + Render), so VITE_API_URL must point at the deployed backend.
+const baseURL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : "/api";
+
 const api = axios.create({
-  baseURL: "/api",
+  baseURL,
   headers: { "Content-Type": "application/json" },
 });
 
